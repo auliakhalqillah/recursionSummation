@@ -1,17 +1,20 @@
+# Summation process by using recursion method
+# Written by    : Aulia Khalqillah,S.Si.,M.Si.
+# Date          : April, 11th 2020
+# Python ver    : 3.7
+
 import numpy as np
-def recursive_myadd(data,storedata=[]):
+# Recursive
+def recursive_myadd(data):
     n = len(data)
     data = np.asarray(data)
     if n == 1:
-        print("n is\t\t:",n)
-        storedata.append(data[0])
-        return data[0],storedata
+        return data[0]
     else:
-        print("n is\t\t:",n)
-        number = data[0]
-        next_data,save_data = recursive_myadd(data[1:])
-        print("Next data\t:",next_data)
-        print("Number\t\t:",number)
-        sumres = number+next_data
-        storedata.extend([number])
-        return sumres,storedata
+        sumres = data[0]+recursive_myadd(data[1:])
+        return sumres
+
+# Main Program
+data = [3,2,5]
+mysum = recursive_myadd(data)
+print("Recursive sum\t:",mysum)
