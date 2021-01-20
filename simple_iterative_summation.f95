@@ -2,12 +2,12 @@ program rec_sum
     implicit none
     integer :: n, io, i
     real, dimension(:), allocatable :: data
-    real :: total_sum, sumdata
+    real :: total_sum, itersum
     real :: start_time, finish_time
     character(len=100) :: fmt
 
     call cpu_time(start_time)
-    write(*,*) 'Recursive Summation Function'
+    write(*,*) 'Iterative Summation Function'
     write(*,*)
 
     open(1, file='data_recursive.txt')
@@ -29,7 +29,7 @@ program rec_sum
     write(*,*) 'DATA:', data
     write(*,*) 'N DATA:', n
 
-    total_sum = sumdata(data,n)
+    total_sum = itersum(data,n)
     write(*,*) 'Total:', total_sum
     deallocate(data)
 
@@ -39,15 +39,13 @@ program rec_sum
 
 end program
 
-recursive function sumdata(data,n) result(total)
+recursive function itersum(data,n) result(total)
     real,dimension(n) :: data
     real :: total
-
-    if (n == 1) then
-        total = data(n)
-        return
-    else
-        total = data(n) + sumdata(data,n-1)
-        return
-    end if
-end function sumdata
+    
+    total = 0
+    do i = 1,n
+        total = total + data(i)
+    end do 
+    return
+end function itersum

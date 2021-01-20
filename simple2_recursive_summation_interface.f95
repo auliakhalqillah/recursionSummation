@@ -1,3 +1,5 @@
+! Interface usage source
+! https://web.stanford.edu/class/me200c/tutorial_90/08_subprograms.html
 program rec_sum
     implicit none
 
@@ -12,7 +14,12 @@ program rec_sum
     integer :: n, io, i
     real, dimension(:), allocatable :: dat
     real :: total_sum
+    real :: start_time, finish_time
+    character(len=100) :: fmt
 
+    call cpu_time(start_time)
+    write(*,*) 'Recursive Summation Function Using Interface'
+    write(*,*)
     open(1, file='data_recursive.txt')
     n = 0
     do 
@@ -31,6 +38,7 @@ program rec_sum
     end do
     close(2)
 
+    write(*,*) 'Data:'
     do i = 1,n 
         write(*,*) dat(i)
     end do
@@ -39,6 +47,11 @@ program rec_sum
     write(*,*) 'Total:', total_sum
 
     deallocate(dat)
+
+    call cpu_time(finish_time)
+    fmt = '(a, f10.7, a)'
+    write(*,fmt) 'Time Processing:', finish_time - start_time, ' seconds'
+
 end program
 
 recursive function summ(dat) result(total)
