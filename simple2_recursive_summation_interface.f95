@@ -4,7 +4,7 @@ program rec_sum
     implicit none
 
     interface
-        function summ(dat) result(total)
+        function recsum(dat) result(total)
             real, dimension(:), allocatable :: dat
             real :: total
             integer :: n
@@ -43,7 +43,7 @@ program rec_sum
         write(*,*) dat(i)
     end do
 
-    total_sum = summ(dat)
+    total_sum = recsum(dat)
     write(*,*) 'Total:', total_sum
 
     deallocate(dat)
@@ -54,7 +54,7 @@ program rec_sum
 
 end program
 
-recursive function summ(dat) result(total)
+recursive function recsum(dat) result(total)
     real,dimension(:), allocatable :: dat
     real :: total
     integer :: n
@@ -66,8 +66,8 @@ recursive function summ(dat) result(total)
         return
     else
         dat = dat(1:n-1)
-        total = dat(n) + summ(dat)
+        total = dat(n) + recsum(dat)
         return
     end if
 
-end function summ
+end function recsum

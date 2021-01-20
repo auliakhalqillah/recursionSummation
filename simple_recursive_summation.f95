@@ -2,7 +2,7 @@ program rec_sum
     implicit none
     integer :: n, io, i
     real, dimension(:), allocatable :: data
-    real :: total_sum, sumdata
+    real :: total_sum, recsum
     real :: start_time, finish_time
     character(len=100) :: fmt
 
@@ -29,7 +29,7 @@ program rec_sum
     write(*,*) 'DATA:', data
     write(*,*) 'N DATA:', n
 
-    total_sum = sumdata(data,n)
+    total_sum = recsum(data,n)
     write(*,*) 'Total:', total_sum
     deallocate(data)
 
@@ -39,7 +39,7 @@ program rec_sum
 
 end program
 
-recursive function sumdata(data,n) result(total)
+recursive function recsum(data,n) result(total)
     real,dimension(n) :: data
     real :: total
 
@@ -47,7 +47,7 @@ recursive function sumdata(data,n) result(total)
         total = data(n)
         return
     else
-        total = data(n) + sumdata(data,n-1)
+        total = data(n) + recsum(data,n-1)
         return
     end if
-end function sumdata
+end function recsum
